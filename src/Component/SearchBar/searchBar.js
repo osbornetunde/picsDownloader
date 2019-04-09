@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 
-const SearchBar = (props) => {
+const SearchBar = ({ onSubmit }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const searchSubmitHandler = (e) => {
     e.preventDefault();
-    props.onSubmit(searchTerm)
+    onSubmit(searchTerm)
     
   }
   
@@ -16,7 +17,9 @@ const SearchBar = (props) => {
           <main className="App__content">
           <label>Picture Search</label>
             <input type="text" className="App" placeholder="Enter Search Term" onChange={ e => setSearchTerm(e.target.value)} value={searchTerm}/>
-            <button onClick={searchSubmitHandler}>Search</button>
+            <button onClick={searchSubmitHandler}>
+              <Link to={`/results/`}>Search</Link>
+            </button>
           </main>
       </div>
     );
