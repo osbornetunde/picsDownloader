@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense,lazy } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import SearchBar from '../SearchBar/searchBar';
-import ImageList from '../../Container/ImageList/imageList';
+// import SearchBar from '../SearchBar/searchBar';
+// import ImageList from '../../Container/ImageList/imageList';
 import pexels from '../../api/pexels';
 import './App.css';
+// import ImageDetails from '../ImageDetails/imageDetails';
+
+
+const ImageDetails = lazy(() => import('../ImageDetails/imageDetails'));
+const SearchBar = lazy(() => import('../SearchBar/searchBar'));
+const ImageList = lazy(() => import('../../Container/ImageList/imageList'));
 
 
 const App = () => {
@@ -21,7 +27,7 @@ const App = () => {
         page: 1
       }
     });
-    // console.log(response)
+    // console.log(response.data.photos[0].photographer)
     setPageNumber(response.data.page)
     setNextPage(response.data.next_page)
     setImages(response.data.photos);
@@ -30,7 +36,7 @@ const App = () => {
   
     return (
       <Router>
-        
+        <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <Route 
             exact path='/' 
@@ -42,9 +48,8 @@ const App = () => {
                <ImageList images={images} pageNext={nextPage} match={match}/>
             }
             />
-            
-
         </Switch>
+        </Suspense>
       </Router>
     );
  

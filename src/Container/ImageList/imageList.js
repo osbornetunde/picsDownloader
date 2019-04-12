@@ -1,8 +1,8 @@
-import React, {useState, useEffect } from 'react';
+import React, { Suspense} from 'react';
 import './imageList.css';
-import ImageCard from '../../Component/ImageCard/imageCard';
 import { Link } from 'react-router-dom'
 
+const ImageCard = React.lazy(() => import('../../Component/ImageCard/imageCard') )
 
 const ImageList = ({ images, pageNext, match}) => {
         
@@ -11,8 +11,12 @@ const ImageList = ({ images, pageNext, match}) => {
     }
     
     
-    const imageList = images.map( image => {
-        return <ImageCard  key={image.id} image={image} />
+    const imageList = images.map( (image, index) => {
+        return (
+            <Suspense fallback={<div>Loading...</div>}>
+                <ImageCard  key={image.id} image={image}  id={image.id}/>
+            </Suspense>
+        )
     })
     return(
         <div className="image__content">
