@@ -1,8 +1,8 @@
 import React, { Suspense,lazy } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route, withRouter } from 'react-router-dom';
 import pexels from '../../api/pexels';
 import './App.css';
-import store from "../../store";
 import { setImages } from "../../actions"
 
 
@@ -11,10 +11,10 @@ const ImageList = lazy(() => import('../../Container/ImageList/imageList'));
 const ImageDetails = lazy(() => import('../ImageDetails/imageDetails'));
 
 
-const App = () => {
+const App = ({ setImages, images, selectedImage}) => {
   
   
-  const { images, selectedImage } = store.getState();
+//   const { images, selectedImage } = store.getState();
   
   
   
@@ -31,7 +31,7 @@ const App = () => {
    
     // setNextPage(response.data.next_page)
     // console.log(response.data.photos[0].src.medium);
-    store.dispatch(setImages(response.data.photos))
+    setImages(response.data.photos)
   }
 
   
@@ -51,7 +51,7 @@ const App = () => {
             />
 
         <Route
-              path = '/results/:id' 
+              exact path = '/results/:page/:id' 
               render = { () => <ImageDetails selectedImage={selectedImage}/>}
                />
             
@@ -63,4 +63,9 @@ const App = () => {
  
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+    images: state.images,
+    selectedImage: state.selectedImage
+})
+
+export default withRouter(connect(mapStateToProps, { setImages })(App));

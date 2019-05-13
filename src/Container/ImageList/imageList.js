@@ -1,22 +1,21 @@
 import React, { Suspense } from 'react';
+import { connect } from 'react-redux'
 import './imageList.css';
 import { Link } from 'react-router-dom';
-import store from "../../store";
 import { setPrevPage, setNextPage } from "../../actions";
 
 const ImageCard = React.lazy(() => import('../../Component/ImageCard/imageCard') )
 
-const ImageList = ({ images, click }) => {
+const ImageList = ({ images, click, currentPage, typing, setNextPage, setPrevPage }) => {
 
-    const { typing, currentPage } = store.getState();
       
     const nextPageHandler =  () => {
-      store.dispatch(setNextPage(currentPage))
+      setNextPage(currentPage)
       click(typing, currentPage)
   }
-
+ 
   const previousPageHandler =  () => {
-    store.dispatch(setPrevPage(currentPage))
+    setPrevPage(currentPage)
     click(typing, currentPage)
 }
     
@@ -24,8 +23,8 @@ const ImageList = ({ images, click }) => {
     
     const imageList = images.map( (image) => {
         return (
-            <Suspense fallback={<div>Loading...</div>}>
-                <ImageCard  key={image.id} image={image}  id={image.id} photographer={image.photographer}/>
+            <Suspense key={image.id} fallback={<div>Loading...</div>}>
+                <ImageCard   image={image}  id={image.id} photographer={image.photographer}/>
             </Suspense>
         )
     })
@@ -60,4 +59,10 @@ const ImageList = ({ images, click }) => {
     )
 };
 
-export default ImageList;
+const mapStateToProps = state => ({
+    typing: state.typing,
+    currentPage: state.currentPage
+})
+
+
+export default connect(mapStateToProps, { setNextPage, setPrevPage})(ImageList);

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, withRouter} from 'react-router-dom';
 import './imageCard.css';
 import store from "../../store";
 import { setSelectedImage, setPhotographer } from '../../actions';
+import ImageDetails from "../ImageDetails/imageDetails"
 // import pexels from "../../api/pexels";
 
 
 
 const ImageCard = ({ image, id, photographer }) => {
 
-    // const { currentPage } = store.getState();
+    
+    const { currentPage } = store.getState();
 
     const [span, setSpan] =useState(0);
     const imageRef = React.createRef();
@@ -27,21 +29,24 @@ const ImageCard = ({ image, id, photographer }) => {
         setSpan(spans)
     }
     
-    const  displaySingleImageHandler =  async () => {
+    const  displaySingleImageHandler =  () => {
        store.dispatch(setSelectedImage(id))
        store.dispatch(setPhotographer(photographer))
-        
+    //    return <Redirect to='/results/:page/:id' />
+    //    history.push(`/results/${currentPage}/${id}`)
 }
+
+
     return (
         <div 
             style={{'gridRowEnd': `span ${span}`}} 
             onClick={displaySingleImageHandler} 
         >
-            <Link to={`/results/${id}`}>
-                <img ref={imageRef} src={image.src.small} alt={image.id}/>
+            <Link to={`/results/${currentPage}/${id}`}>
+                <img ref={imageRef} src={image.src.small} alt={image.id} />
             </Link>
         </div>
     )
 }
 
-export default ImageCard
+export default withRouter(ImageCard)

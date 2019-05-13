@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import './imageDetails.css';
 import pexels from '../../api/pexels';
-import store from "../../store";
 
-const ImageDetails = ({selectedImage}) => {
+const ImageDetails = ({ photographer, selectedImage}) => {
 
-    const { photographer } = store.getState();
+    // const { photographer, selectedImage } = store.getState();
     const [image, setImage] = useState()
     
     
@@ -29,4 +29,9 @@ const ImageDetails = ({selectedImage}) => {
     )
 }
 
-export default ImageDetails;
+const mapStateToProps = (state) => ({
+    photographer: state.photographer,
+    selectedImage: state.selectedImage
+})
+
+export default connect(mapStateToProps)(ImageDetails);

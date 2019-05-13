@@ -1,19 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './searchBar.css';
-import store from "../../store";
 import { setTypingValue } from "../../actions";
+import { connect } from 'react-redux';
 
 
 
-const SearchBar = ({ onSubmit }) => {
+const SearchBar = ({ onSubmit, typing, currentPage, setTypingValue }) => {
   
-  const { typing, currentPage }  = store.getState();
+  // const { typing, currentPage }  = store.getState();
 
   const searchValueHandler = (e) => {
     e.preventDefault();
-    
-    store.dispatch(setTypingValue(e.target.value))
+    setTypingValue(e.target.value)
     
   }
 
@@ -34,4 +33,9 @@ const SearchBar = ({ onSubmit }) => {
     );
   }
 
-export default SearchBar;
+  const mapStateToProps = state => ({
+    typing: state.typing,
+    currentPage: state.currentPage
+  })
+
+export default connect(mapStateToProps,{ setTypingValue })(SearchBar);

@@ -1,23 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import './index.css';
 import App from './Component/App/App';
 import store from "./store";
 import * as serviceWorker from './serviceWorker';
 
-const render = () => {
+
     
-    log()
     ReactDOM.render((
+    <Provider store={store}>
     <BrowserRouter>
         <App />
-    </BrowserRouter>), document.getElementById('root'));
-}
-const log = () => {
-    console.log(store.getState());
-}
+    </BrowserRouter>
+    </Provider>), document.getElementById('root'));
 
-render();
-store.subscribe(render);
+
+
+
 serviceWorker.unregister();
