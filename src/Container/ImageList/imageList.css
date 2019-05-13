@@ -8,11 +8,27 @@
     /* grid-gap: 5px; */
     grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
     resize: horizontal;
+    position: relative;
+}
+
+.direction__buttons {
+    display: flex;
+    justify-content: space-between;
 }
 
 .image-list__next {
     color: whitesmoke;
     font-weight: 800;
     border: none;
-    align-self: center;
+    margin-right: 30px;
+    margin-top: 30px;
+}
+
+.image-list__prev {
+    color: whitesmoke;
+    font-weight: 800;
+    border: none;
+    align-self: left;
+    margin-left: 30px;
+    margin-top: 30px;
 }

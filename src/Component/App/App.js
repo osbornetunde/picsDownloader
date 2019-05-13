@@ -1,38 +1,40 @@
-import React, { useState, Suspense,lazy } from 'react';
+import React, { Suspense,lazy } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import SearchBar from '../SearchBar/searchBar';
-// import ImageList from '../../Container/ImageList/imageList';
 import pexels from '../../api/pexels';
 import './App.css';
-// import ImageDetails from '../ImageDetails/imageDetails';
+import store from "../../store";
+import { setImages } from "../../actions"
 
 
-const ImageDetails = lazy(() => import('../ImageDetails/imageDetails'));
 const SearchBar = lazy(() => import('../SearchBar/searchBar'));
 const ImageList = lazy(() => import('../../Container/ImageList/imageList'));
+const ImageDetails = lazy(() => import('../ImageDetails/imageDetails'));
 
 
 const App = () => {
   
-  const [images, setImages] = useState([])
-  const [nextPage, setNextPage] = useState("")
-  const [pageNumber, setPageNumber] = useState(1)
+  
+  const { images, selectedImage } = store.getState();
+  
+  
   
 
-  const searchHandler = async (searchTerm) => {
+  const searchHandler = async (searchTerm, currentPage) => {
     const response = await pexels.get('/v1/search?', {
       params: {
         query: searchTerm,
         per_page: 20,
-        page: 1
+        page: currentPage
       }
     });
     // console.log(response.data.photos[0].photographer)
-    setPageNumber(response.data.page)
-    setNextPage(response.data.next_page)
-    setImages(response.data.photos);
+   
+    // setNextPage(response.data.next_page)
+    // console.log(response.data.photos[0].src.medium);
+    store.dispatch(setImages(response.data.photos))
   }
- 
+
+  
   
     return (
       <Router>
@@ -40,13 +42,19 @@ const App = () => {
         <Switch>
           <Route 
             exact path='/' 
-            render={({match}) => <SearchBar onSubmit={searchHandler} pageNumber={pageNumber}/>} />
+            render={() => <SearchBar onSubmit={searchHandler} />} />
 
         <Route 
             path='/results/:page' 
-            render={({match}) => 
-               <ImageList images={images} pageNext={nextPage} match={match}/>
-            }
+            render={() => 
+               <ImageList images={images}  click={searchHandler}/>}
+            />
+
+        <Route
+              path = '/results/:id' 
+              render = { () => <ImageDetails selectedImage={selectedImage}/>}
+               />
+            
             />
         </Switch>
         </Suspense>

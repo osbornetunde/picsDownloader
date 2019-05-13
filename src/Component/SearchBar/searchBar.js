@@ -1,25 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './searchBar.css';
+import store from "../../store";
+import { setTypingValue } from "../../actions";
 
 
 
-const SearchBar = ({ onSubmit, pageNumber }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+const SearchBar = ({ onSubmit }) => {
+  
+  const { typing, currentPage }  = store.getState();
 
-  const searchSubmitHandler = (e) => {
+  const searchValueHandler = (e) => {
     e.preventDefault();
-    onSubmit(searchTerm)
     
+    store.dispatch(setTypingValue(e.target.value))
+    
+  }
+
+  const searchSubmitHandler = () => {
+    onSubmit(typing, currentPage)
   }
   
     return (
       <div className="App">
           <main className="App__content">
           <label>Picture Search</label>
-            <input type="text" className="App" placeholder="Enter Search Term" onChange={ e => setSearchTerm(e.target.value)} value={searchTerm}/>
+            <input type="text" className="App" placeholder="Enter Search Term" onChange={searchValueHandler} value={typing}/>
             <button onClick={searchSubmitHandler}>
-              <Link to={`/results/${pageNumber}`} className="text">Search</Link>
+              <Link to={`/results/${currentPage}`} className="text">Search</Link>
             </button>
           </main>
       </div>

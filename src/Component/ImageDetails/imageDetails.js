@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './imageDetails.css';
 import pexels from '../../api/pexels';
+import store from "../../store";
 
-const ImageDetails = (photographer, imageId) => {
+const ImageDetails = ({selectedImage}) => {
+
+    const { photographer } = store.getState();
     const [image, setImage] = useState()
     
-    useEffect(() => { 
+    
         const fetchImage = async () => {
-        const response = await pexels.get(`v1/photos/${imageId}`);
+        const response = await pexels.get(`v1/photos/${selectedImage}`);
             setImage(response)
         }
-        fetchImage();
-    }, []);
+   
 
-    console.log(image)
+    
     return (
         <div className="card" >
             <div className="card__image">
@@ -22,6 +24,7 @@ const ImageDetails = (photographer, imageId) => {
             <div className="card__details">
                 <p>photographer: `${photographer}</p>
             </div>
+            <button onClick={fetchImage}>Download</button>
         </div>
     )
 }

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Route, Router, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './imageCard.css';
-import ImageDetails from '../ImageDetails/imageDetails';
+import store from "../../store";
+import { setSelectedImage, setPhotographer } from '../../actions';
+// import pexels from "../../api/pexels";
 
 
 
-const ImageCard = ({ image, id }) => {
+const ImageCard = ({ image, id, photographer }) => {
+
+    // const { currentPage } = store.getState();
 
     const [span, setSpan] =useState(0);
     const imageRef = React.createRef();
@@ -23,27 +27,18 @@ const ImageCard = ({ image, id }) => {
         setSpan(spans)
     }
     
-    const  displaySingleImageHandler = () => {
-       console.log(id)
-        return (
-            <Router>
-                <Switch>
-                    <Route
-                    path = '/results/:id'
-                    render={() => <ImageDetails imageId={id} photographer={image.photographer}/>}
-                    />
-                </Switch>
-            </Router>
-        )
+    const  displaySingleImageHandler =  async () => {
+       store.dispatch(setSelectedImage(id))
+       store.dispatch(setPhotographer(photographer))
+        
 }
     return (
         <div 
             style={{'gridRowEnd': `span ${span}`}} 
             onClick={displaySingleImageHandler} 
-            data-id={id}
         >
             <Link to={`/results/${id}`}>
-                <img ref={imageRef} src={image.src.medium}/>
+                <img ref={imageRef} src={image.src.small} alt={image.id}/>
             </Link>
         </div>
     )
