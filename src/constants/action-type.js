@@ -4,3 +4,4 @@ export const SET_PREV_PAGE = "SET_PREV_PAGE";
 export const SET_IMAGES = "SET_IMAGES";
 export const SET_IMAGE_ID = "SET_IMAGE_ID";
 export const SET_IMAGE_PHOTOGRAPHER = "SET_IMAGE_PHOTOGRAPHER";
+export const MAKE_REQUEST = "MAKE_REQUEST";

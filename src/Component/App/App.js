@@ -1,71 +1,41 @@
-import React, { Suspense,lazy } from 'react';
-import { connect } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route, withRouter } from 'react-router-dom';
-import pexels from '../../api/pexels';
-import './App.css';
-import { setImages } from "../../actions"
+import React, { Suspense, lazy } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+// import pexels from "../../api/pexels";
+import "./App.css";
+// import { setImages } from "../../actions";
 
+const SearchBar = lazy(() => import("../SearchBar/searchBar"));
+const ImageList = lazy(() => import("../../Container/ImageList/imageList"));
 
-const SearchBar = lazy(() => import('../SearchBar/searchBar'));
-const ImageList = lazy(() => import('../../Container/ImageList/imageList'));
-const ImageDetails = lazy(() => import('../ImageDetails/imageDetails'));
+const App = () => {
+  //ToDo: Make API call with redux-thunk
+  // const searchHandler = async (searchTerm, currentPage) => {
+  //   const response = await pexels.get("/v1/search?", {
+  //     params: {
+  //       query: searchTerm,
+  //       per_page: 20,
+  //       page: currentPage
+  //     }
+  //   });
+  //   setImages(response.data.photos);
+  // };
 
-
-const App = ({ setImages, images, selectedImage}) => {
-  
-  
-//   const { images, selectedImage } = store.getState();
-  
-  
-  
-
-  const searchHandler = async (searchTerm, currentPage) => {
-    const response = await pexels.get('/v1/search?', {
-      params: {
-        query: searchTerm,
-        per_page: 20,
-        page: currentPage
-      }
-    });
-    // console.log(response.data.photos[0].photographer)
-   
-    // setNextPage(response.data.next_page)
-    // console.log(response.data.photos[0].src.medium);
-    setImages(response.data.photos)
-  }
-
-  
-  
-    return (
-      <Router>
-        <Suspense fallback={<div>Loading...</div>}>
+  return (
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
         <Switch>
-          <Route 
-            exact path='/' 
-            render={() => <SearchBar onSubmit={searchHandler} />} />
+          <Route exact path="/" component={SearchBar} />
+          <Route path="/results/:page" component={ImageList} />
 
-        <Route 
-            path='/results/:page' 
-            render={() => 
-               <ImageList images={images}  click={searchHandler}/>}
-            />
-
-        <Route
-              exact path = '/results/:page/:id' 
-              render = { () => <ImageDetails selectedImage={selectedImage}/>}
-               />
-            
-            />
+          <Route exact path="/results/:page/:id" component={ImageList} />
         </Switch>
-        </Suspense>
-      </Router>
-    );
- 
-}
+      </Suspense>
+    </Router>
+  );
+};
 
-const mapStateToProps = (state) => ({
-    images: state.images,
-    selectedImage: state.selectedImage
-})
+// const mapStateToProps = state => ({
+//   images: state.images
+// });
 
-export default withRouter(connect(mapStateToProps, { setImages })(App));
+export default App;

@@ -1,4 +1,3 @@
-
 .App {
     width: 100%;
     height: 100%;
@@ -6,6 +5,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .App__content {
     display: flex;
     width: 80%;
@@ -19,17 +19,17 @@ input[type=text] {
     border: 2px solid white;
     border-radius: 1.5rem;
     outline-color: aqua;
-    -webkit-box-shadow: 
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
-    -moz-box-shadow: 
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
-    box-shadow: 
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
+    -webkit-box-shadow:
+        inset 0 0 8px rgba(0, 0, 0, 0.1),
+        0 0 16px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow:
+        inset 0 0 8px rgba(0, 0, 0, 0.1),
+        0 0 16px rgba(0, 0, 0, 0.1);
+    box-shadow:
+        inset 0 0 8px rgba(0, 0, 0, 0.1),
+        0 0 16px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    background: rgba(255,255,255,0.5);
+    background: rgba(255, 255, 255, 0.5);
     margin: 0 20px 10px 10px;
 }
 
@@ -41,19 +41,25 @@ button {
     width: 100px;
     height: 40px;
     border-radius: 1rem;
-    background: aqua;
+    background: #5997ac;
     transition: background 0.5s linear;
     border: none;
+    color: whitesmoke;
 }
 
 button:hover {
-    background: aquamarine;
+    background: #eeede7;
+    color: #000;
 }
 
-.text {
+a {
     color: whitesmoke;
     font-size: 0.9rem;
     text-decoration: none;
     font-weight: 700;
 }
 
+a:hover,
+a:active {
+    color: #000;
+}

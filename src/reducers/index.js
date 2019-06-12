@@ -6,9 +6,9 @@ import selectedImage from "./selectedImage";
 import photographer from "./setPhotographer";
 
 export default combineReducers({
-    typing,
-    currentPage,
-    images,
-    selectedImage,
-    photographer
-})
+  typing,
+  currentPage,
+  images,
+  selectedImage,
+  photographer
+});

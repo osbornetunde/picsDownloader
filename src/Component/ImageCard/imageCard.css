@@ -1,0 +1,9 @@
+/* .Card {
+    width: 10rem;
+    height: 20rem;
+} */
+
+.Card__image {
+    width: 2rem;
+    height: 50%;
+}

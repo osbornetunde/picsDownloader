@@ -1,37 +1,43 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import './imageDetails.css';
-import pexels from '../../api/pexels';
+import React from "react";
+import ReactDOM from "react-dom";
+import { connect } from "react-redux";
 
-const ImageDetails = ({ photographer, selectedImage}) => {
+const modalRoot = document.getElementById("modal-root");
 
-    // const { photographer, selectedImage } = store.getState();
-    const [image, setImage] = useState()
-    
-    
-        const fetchImage = async () => {
-        const response = await pexels.get(`v1/photos/${selectedImage}`);
-            setImage(response)
-        }
-   
+const ImageDetails = props =>
+  ReactDOM.createPortal(
+    <div
+      style={{
+        position: "absolute",
+        top: "0",
+        bottom: "0",
+        left: "0",
+        right: "0",
+        display: "grid",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(0,0,0,0.3)"
+      }}
+      onClick={props.onClose}
+    >
+      <div
+        style={{
+          padding: 20,
+          background: "#fff",
+          borderRadius: "2px",
+          display: "inline-block",
+          minHeight: "300px",
+          margin: "1rem",
+          position: "relative",
+          minWidth: "300px",
+          boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+          justifySelf: "center"
+        }}
+      >
+        {props.children}
+      </div>
+    </div>,
+    modalRoot
+  );
 
-    
-    return (
-        <div className="card" >
-            <div className="card__image">
-                <img src={image} alt={photographer}/>
-            </div>
-            <div className="card__details">
-                <p>photographer: `${photographer}</p>
-            </div>
-            <button onClick={fetchImage}>Download</button>
-        </div>
-    )
-}
-
-const mapStateToProps = (state) => ({
-    photographer: state.photographer,
-    selectedImage: state.selectedImage
-})
-
-export default connect(mapStateToProps)(ImageDetails);
+export default connect(null)(ImageDetails);
