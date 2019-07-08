@@ -2,7 +2,6 @@
   "name": "picsdownloader",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://osbornetunde.github.io/picsdownloader",
   "dependencies": {
     "axios": "^0.18.0",
     "browserify-fs": "^1.0.0",
@@ -10,8 +9,6 @@
     "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-prettier": "^3.1.0",
     "file-saver": "^2.0.2",
-    "gh-pages": "^2.0.1",
-    "image-downloader": "^3.4.2",
     "path": "^0.12.7",
     "prettier": "^1.18.2",
     "react": "^16.8.6",
@@ -22,11 +19,10 @@
     "react-scripts": "2.1.8",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
+    "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

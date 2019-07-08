@@ -21,18 +21,22 @@ const ImageList = ({
   typing,
   setNextPage,
   setPrevPage,
-  setImages
+  setImages,
+  location
 }) => {
+  // console.log(location);
   const nextPageHandler = () => {
     setNextPage(currentPage);
     makeRequest(typing, currentPage);
-    setImages([]);
+
+    // setImages([]);
   };
 
   const previousPageHandler = () => {
     setPrevPage(currentPage);
+
     makeRequest(typing, currentPage);
-    setImages([]);
+    // setImages([]);
   };
 
   const imageList = images.map(image => {

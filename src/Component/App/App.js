@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { withRouter } from "react-router";
 // import pexels from "../../api/pexels";
 import "./App.css";
 // import { setImages } from "../../actions";
@@ -38,4 +39,4 @@ const App = () => {
 //   images: state.images
 // });
 
-export default App;
+export default withRouter(App);

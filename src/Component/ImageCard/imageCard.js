@@ -23,7 +23,10 @@ const ImageCard = ({ image, id, photographer, currentPage }) => {
       responseType: "blob"
     });
 
-    FileSaver.saveAs(new Blob([response.data]));
+    const fileTitle = imageUrl.split(`/${id}/`);
+    const filename = fileTitle[1];
+
+    FileSaver.saveAs(new Blob([response.data]), filename);
   };
 
   useEffect(() => {
